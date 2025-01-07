@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="/images/favicon.png" type="">
+  <title>AtOm Bank</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link href="/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="/css/style.css" rel="stylesheet" />
+  <link href="/css/responsive.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="hero_area">
+  <div class="hero_bg_box">
+    <div class="bg_img_box">
+      <img src="/images/hero-bg.png" alt="">
+    </div>
+  </div>
+
+  <header class="header_section">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a class="navbar-brand" th:href="@{/}">
+          <img th:src="@{/images/atom.svg}" alt="Logo" style="height: 30px; width: auto;">
+          <span>AtOm</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class=""></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/}">Ana Sayfa <span class="sr-only">(mevcut)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/about}">Bankamız</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/team}">Takımımız</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/login}">
+                <i class="fa fa-user" aria-hidden="true"></i> Giriş
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="slider_section">
+    <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="detail-box">
+                  <h1>Dijital<br>Bankacılık</h1>
+                  <p>Modern bankacılık deneyimi için doğru adrestesiniz. Güvenli, hızlı ve kullanıcı dostu platformumuzla tüm finansal işlemlerinizi kolayca yönetin.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="img-box">
+                  <img src="/images/slider-img.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="detail-box">
+                  <h1>Yatırım<br>Fırsatları</h1>
+                  <p>Uzman ekibimizle yatırımlarınızı en iyi şekilde değerlendirin. Size özel portföy yönetimi ve yatırım danışmanlığı hizmetlerimizden faydalanın.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="img-box">
+                  <img src="/images/slider-img.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="detail-box">
+                  <h1>Mobil<br>Bankacılık</h1>
+                  <p>7/24 kesintisiz bankacılık deneyimi için mobil uygulamamızı keşfedin. Tüm işlemlerinizi tek dokunuşla gerçekleştirin.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="img-box">
+                  <img src="/images/slider-img.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ol class="carousel-indicators">
+        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
+        <li data-target="#customCarousel1" data-slide-to="1"></li>
+        <li data-target="#customCarousel1" data-slide-to="2"></li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+<div>
+  <section class="market_info_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>Piyasa <span>Bilgileri</span></h2>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover market-table">
+          <thead>
+          <tr>
+            <th>Döviz</th>
+            <th>Alış (TL)</th>
+            <th>Satış (TL)</th>
+            <th>Banknot Alış</th>
+            <th>Banknot Satış</th>
+          </tr>
+          </thead>
+          <tbody id="marketTableBody">
+          </tbody>
+        </table>
+      </div>
+      <div class="text-end mt-3">
+        <small class="text-muted" id="lastUpdate"></small>
+      </div>
+    </div>
+  </section>
+
+  <div class="container mt-4">
+    <div class="converter-box">
+      <div class="heading_container heading_center mb-4">
+        <h2>Para Birimi <span>Dönüştürücü</span></h2>
+      </div>
+      <div class="converter-container">
+        <div class="input-group">
+          <input type="number" id="amount1" class="converter-input" value="1" min="0" step="any" placeholder="Miktar girin">
+          <select id="currency1" class="converter-select">
+            <option value="USD">USD - Amerikan Doları</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="TRY">TRY - Türk Lirası</option>
+            <option value="GBP">GBP - İngiliz Sterlini</option>
+            <option value="CHF">CHF - İsviçre Frangı</option>
+            <option value="JPY">JPY - Japon Yeni</option>
+          </select>
+        </div>
+
+        <div class="converter-swap">
+          <button id="swapButton" title="Para birimlerini değiştir">
+            <i class="fa fa-exchange"></i>
+          </button>
+        </div>
+
+        <div class="input-group">
+          <input type="text" id="amount2" class="converter-input" readonly placeholder="Sonuç">
+          <select id="currency2" class="converter-select">
+            <option value="TRY">TRY - Türk Lirası</option>
+            <option value="USD">USD - Amerikan Doları</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - İngiliz Sterlini</option>
+            <option value="CHF">CHF - İsviçre Frangı</option>
+            <option value="JPY">JPY - Japon Yeni</option>
+          </select>
+        </div>
+      </div>
+      <div id="conversion-info" class="text-center mt-3 text-muted">
+        <small>1 <span id="from-currency">USD</span> = <span id="rate">Yükleniyor...</span> <span id="to-currency">TRY</span></small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="info_section layout_padding2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-lg-3 info_col">
+        <div class="info_contact">
+          <h4>İletişim</h4>
+          <div class="contact_link_box">
+            <a href="">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>Acarlar, Acarlar Mah. Şehit, Ali Karakuzu Sk. No:10, 45400 Turgutlu/Manisa</span>
+            </a>
+            <a href="">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <span>+90 123 456 7890</span>
+            </a>
+            <a href="">
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+              <span>info@atom.com</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 info_col">
+        <div class="info_detail">
+          <h4>Hakkımızda</h4>
+          <p>Güvenilir bankacılık hizmetleriyle 20 yılı aşkın süredir yanınızdayız.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="footer_section">
+  <div class="container">
+    <p>&copy; <span id="displayYear"></span> Tüm Hakları Saklıdır</p>
+  </div>
+</section>
+  <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script type="text/javascript" src="/js/custom.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+
+  <style>
+    .market-table {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .market-table thead th {
+      background: linear-gradient(45deg, #1a237e, #3949ab);
+      color: white;
+      font-weight: 500;
+      padding: 15px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    .market-table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .market-table tbody tr:hover {
+      background-color: rgba(63, 81, 181, 0.05);
+      transform: scale(1.01);
+    }
+
+    .market-table td {
+      padding: 15px;
+      vertical-align: middle;
+    }
+
+    .market-table small {
+      opacity: 0.7;
+    }
+
+    #lastUpdate {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 10px;
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .market-table tbody tr {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+  </style>
+  <style>
+    .converter-box {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+
+    .converter-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .converter-input {
+      width: 50%;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #f8f9fa;
+    }
+
+    .converter-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .converter-input:disabled,
+    .converter-input[readonly] {
+      background: #f8f9fa;
+      cursor: not-allowed;
+    }
+
+    .converter-select {
+      width: 50%;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 16px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .converter-select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .converter-swap button {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .converter-swap button:hover {
+      transform: rotate(180deg);
+      background: linear-gradient(45deg, #3b82f6, #1e3a8a);
+      box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+    }
+
+    #conversion-info {
+      font-size: 14px;
+      color: #666;
+      padding: 10px;
+      border-radius: 8px;
+      background: #f8f9fa;
+      margin-top: 20px;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const currencyNames = {
+        'USD': 'Amerikan Doları',
+        'EUR': 'Euro',
+        'GBP': 'İngiliz Sterlini',
+        'CAD': 'Kanada Doları',
+        'CHF': 'İsviçre Frangı'
+      };
+
+      function formatCurrency(number) {
+        return number ? new Intl.NumberFormat('tr-TR', {
+          minimumFractionDigits: 4,
+          maximumFractionDigits: 4
+        }).format(number) : '-';
+      }
+
+      function updateMarketData() {
+        // TCMB'nin XML servisi yerine açık bir API kullanıyoruz
+        fetch('https://api.exchangerate-api.com/v4/latest/TRY')
+                .then(response => response.json())
+                .then(data => {
+                  const tableBody = document.getElementById('marketTableBody');
+                  tableBody.innerHTML = '';
+
+                  Object.entries(currencyNames).forEach(([code, name]) => {
+                    const rate = 1 / data.rates[code]; // TRY karşılığını alıyoruz
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="text-start">
+                            <strong>${name}</strong>
+                            <br>
+                            <small class="text-muted">${code}</small>
+                        </td>
+                        <td>${formatCurrency(rate)}</td>
+                        <td>${formatCurrency(rate * 1.002)}</td>
+                        <td>${formatCurrency(rate * 0.998)}</td>
+                        <td>${formatCurrency(rate * 1.004)}</td>
+                    `;
+
+                    tableBody.appendChild(row);
+                  });
+
+                  document.getElementById('lastUpdate').textContent =
+                          `Son güncelleme: ${new Date().toLocaleTimeString('tr-TR')}`;
+                })
+                .catch(error => {
+                  console.error('Veri çekme hatası:', error);
+                  // Alternatif API'yi deneyelim
+                  fetch('https://open.er-api.com/v6/latest/TRY')
+                          .then(response => response.json())
+                          .then(data => {
+                            const tableBody = document.getElementById('marketTableBody');
+                            tableBody.innerHTML = '';
+
+                            Object.entries(currencyNames).forEach(([code, name]) => {
+                              const rate = 1 / data.rates[code];
+
+                              const row = document.createElement('tr');
+                              row.innerHTML = `
+                                <td class="text-start">
+                                    <strong>${name}</strong>
+                                    <br>
+                                    <small class="text-muted">${code}</small>
+                                </td>
+                                <td>${formatCurrency(rate)}</td>
+                                <td>${formatCurrency(rate * 1.002)}</td>
+                                <td>${formatCurrency(rate * 0.998)}</td>
+                                <td>${formatCurrency(rate * 1.004)}</td>
+                            `;
+
+                              tableBody.appendChild(row);
+                            });
+
+                            document.getElementById('lastUpdate').textContent =
+                                    `Son güncelleme: ${new Date().toLocaleTimeString('tr-TR')}`;
+                          })
+                          .catch(err => {
+                            tableBody.innerHTML = `
+                            <tr>
+                                <td colspan="5" class="text-center text-danger">
+                                    <i class="fa fa-exclamation-triangle me-2"></i>
+                                    Veriler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.
+                                </td>
+                            </tr>
+                        `;
+                          });
+                });
+      }
+
+      // İlk yükleme
+      updateMarketData();
+
+      // Her 1 dakikada bir güncelle
+      const intervalId = setInterval(updateMarketData, 60000);
+
+      // Sayfa kapatıldığında interval'i temizle
+      window.addEventListener('beforeunload', () => {
+        clearInterval(intervalId);
+      });
+    });
+  </script>
+<script>
+  let exchangeRates = {};
+
+  function initializeConverter() {
+    const amount1Input = document.getElementById('amount1');
+    const amount2Input = document.getElementById('amount2');
+    const currency1Select = document.getElementById('currency1');
+    const currency2Select = document.getElementById('currency2');
+    const swapButton = document.getElementById('swapButton');
+
+    function updateExchangeResult() {
+      const amount = parseFloat(amount1Input.value);
+      const fromCurrency = currency1Select.value;
+      const toCurrency = currency2Select.value;
+
+      if (isNaN(amount)) {
+        amount2Input.value = '';
+        return;
+      }
+
+      fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`)
+              .then(response => response.json())
+              .then(data => {
+                const rate = data.rates[toCurrency];
+                const result = amount * rate;
+                amount2Input.value = result.toFixed(2);
+              })
+              .catch(error => {
+                console.error('Dönüştürme hatası:', error);
+                amount2Input.value = 'Hata!';
+              });
+    }
+
+    function swapCurrencies() {
+      const tempValue = currency1Select.value;
+      currency1Select.value = currency2Select.value;
+      currency2Select.value = tempValue;
+      updateExchangeResult();
+    }
+
+    // Event listeners
+    amount1Input.addEventListener('input', updateExchangeResult);
+    currency1Select.addEventListener('change', updateExchangeResult);
+    currency2Select.addEventListener('change', updateExchangeResult);
+    swapButton.addEventListener('click', swapCurrencies);
+
+    // İlk dönüşümü yap
+    updateExchangeResult();
+  }
+
+  // Sayfa yüklendiğinde dönüştürücüyü başlat
+  document.addEventListener('DOMContentLoaded', function() {
+    initializeConverter();
+  });
+</script>
+
+</body>
+
+</html>

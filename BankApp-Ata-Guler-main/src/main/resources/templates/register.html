@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Kayıt</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background-color: rgba(25, 0, 51, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00c3ff;
+        }
+
+        .auth-buttons {
+            margin-left: auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-buttons a {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .auth-buttons .register {
+            background-color: #00c3ff;
+        }
+
+        .background-radial-gradient {
+            background-color: hsl(218, 41%, 15%);
+            background-image: radial-gradient(650px circle at 0% 0%,
+            hsl(218, 41%, 35%) 15%,
+            hsl(218, 41%, 30%) 35%,
+            hsl(218, 41%, 20%) 75%,
+            hsl(218, 41%, 19%) 80%,
+            transparent 100%),
+            radial-gradient(1250px circle at 100% 100%,
+                    hsl(218, 41%, 45%) 15%,
+                    hsl(218, 41%, 30%) 35%,
+                    hsl(218, 41%, 20%) 75%,
+                    hsl(218, 41%, 19%) 80%,
+                    transparent 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 60px;
+        }
+
+        #radius-shape-1 {
+            height: 220px;
+            width: 220px;
+            top: -60px;
+            left: -130px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        #radius-shape-2 {
+            border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+            bottom: -60px;
+            right: -110px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+            position: absolute;
+        }
+
+        .bg-glass {
+            background-color: hsla(0, 0%, 100%, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .col-lg-6 {
+            flex: 1;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1.2;
+            color: hsl(218, 81%, 95%);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 span {
+            color: hsl(218, 81%, 75%);
+        }
+
+        .intro-text {
+            color: hsl(218, 81%, 85%);
+            opacity: 0.7;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            background-color: #007bff;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: rgba(212, 237, 218, 0.9);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: rgba(248, 215, 218, 0.9);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(40, 167, 69, 0.9);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 992px) {
+            .row {
+                flex-direction: column;
+                text-align: center;
+            }
+            .col-lg-6 {
+                width: 100%;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-links">
+        <a th:href="@{/}">ANA SAYFA</a>
+        <a th:href="@{/about}">BANKAMIZ</a>
+        <a th:href="@{/team}">TAKIM</a>
+    </div>
+    <div class="auth-buttons">
+        <a th:href="@{/login}" class="login">GİRİŞ</a>
+
+    </div>
+</nav>
+
+<section class="background-radial-gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6" style="z-index: 10">
+                <h1 class="display-5 fw-bold ls-tight">
+                    Üye Olun <br />
+                    <span>Avantajlardan Yararlanın</span>
+                </h1>
+                <p class="opacity-70 intro-text">
+                    Üye olarak tüm bankacılık işlemlerini kolayca yapabilir,
+                    özel fırsatlardan ve kampanyalardan yararlanabilirsiniz.
+                </p>
+            </div>
+
+            <div class="col-lg-6 position-relative">
+                <div id="radius-shape-1" class="shadow-5-strong"></div>
+                <div id="radius-shape-2" class="shadow-5-strong"></div>
+
+                <div class="bg-glass">
+                    <div id="successAlert" class="alert alert-success"></div>
+                    <div id="errorAlert" class="alert alert-danger"></div>
+
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label class="form-label" for="username">Kullanıcı Adı:</label>
+                            <input type="text" id="username" name="username" class="form-control" required
+                                   minlength="3" maxlength="50">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">E-posta:</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="password">Şifre:</label>
+                            <input type="password" id="password" name="password" class="form-control" required
+                                   minlength="6" maxlength="50">
+                        </div>
+
+                        <button type="submit" id="submitButton" class="btn">Kayıt Ol</button>
+                    </form>
+                    <div id="loading" class="loading">Kayıt işlemi yapılıyor...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="toast" class="toast">Kayıt başarılı, giriş yapabilirsiniz.</div>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const successAlert = document.getElementById('successAlert');
+        const errorAlert = document.getElementById('errorAlert');
+        const submitButton = document.getElementById('submitButton');
+        const loadingDiv = document.getElementById('loading');
+
+        const formData = {
+            username: document.getElementById('username').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            password: document.getElementById('password').value
+        };
+
+        if (formData.username.length < 3) {
+            errorAlert.textContent = 'Kullanıcı adı en az 3 karakter olmalıdır.';
+            errorAlert.style.display = 'block';
+            successAlert.style.display = 'none';
+            return;
+        }
+
+        if (!formData.email.includes('@')) {
+            errorAlert.textContent = 'Geçerli bir e-posta adresi giriniz.';
+            errorAlert.style.display = 'block';
+            successAlert.style.display = 'none';
+            return;
+        }
+
+        if (formData.password.length < 6) {
+            errorAlert.textContent = 'Şifre en az 6 karakter olmalıdır.';
+            errorAlert.style.display = 'block';
+            successAlert.style.display = 'none';
+            return;
+        }
+
+        submitButton.disabled = true;
+        loadingDiv.style.display = 'block';
+        errorAlert.style.display = 'none';
+        successAlert.style.display = 'none';
+
+        fetch('/api/users/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Kayıt işlemi başarısız oldu');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                successAlert.textContent = data.message || 'Kayıt işlemi başarıyla tamamlandı!';
+                successAlert.style.display = 'block';
+                document.getElementById('registrationForm').reset();
+
+                const toast = document.getElementById('toast');
+                toast.style.display = 'block';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                    window.location.href = '/login';
+                }, 2000);
+            })
+            .catch(error => {
+                let errorMessage = 'Kayıt işlemi sırasında bir hata oluştu.';
+                try {
+                    const errorData = JSON.parse(error.message);
+                    errorMessage = errorData.message || errorMessage;
+                } catch (e) {
+                    errorMessage = error.message || errorMessage;
+                }
+                errorAlert.textContent = errorMessage;
+                errorAlert.style.display = 'block';
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                loadingDiv.style.display = 'none';
+            });
+    });
+</script>
+</body>
+</html>

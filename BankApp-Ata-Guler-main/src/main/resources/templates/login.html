@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .background-radial-gradient {
+            background-color: hsl(218, 41%, 15%);
+            background-image: radial-gradient(650px circle at 0% 0%,
+            hsl(218, 41%, 35%) 15%,
+            hsl(218, 41%, 30%) 35%,
+            hsl(218, 41%, 20%) 75%,
+            hsl(218, 41%, 19%) 80%,
+            transparent 100%),
+            radial-gradient(1250px circle at 100% 100%,
+                    hsl(218, 41%, 45%) 15%,
+                    hsl(218, 41%, 30%) 35%,
+                    hsl(218, 41%, 20%) 75%,
+                    hsl(218, 41%, 19%) 80%,
+                    transparent 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #radius-shape-1 {
+            height: 220px;
+            width: 220px;
+            top: -60px;
+            left: -130px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        #radius-shape-2 {
+            border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+            bottom: -60px;
+            right: -110px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+            position: absolute;
+        }
+
+        .bg-glass {
+            background-color: hsla(0, 0%, 100%, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .col-lg-6 {
+            flex: 1;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1.2;
+            color: hsl(218, 81%, 95%);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 span {
+            color: hsl(218, 81%, 75%);
+        }
+
+        .intro-text {
+            color: hsl(218, 81%, 85%);
+            opacity: 0.7;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .form-outline {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-check-input {
+            margin-right: 0.5rem;
+        }
+
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+            background: rgba(220, 53, 69, 0.1);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-center a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 992px) {
+            .row {
+                flex-direction: column;
+                text-align: center;
+            }
+            .col-lg-6 {
+                width: 100%;
+                padding: 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background-color: rgba(25, 0, 51, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00c3ff;
+        }
+
+        .nav-links .active {
+            color: #00c3ff;
+        }
+
+        .auth-buttons {
+            margin-left: auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-buttons a {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .auth-buttons .login {
+            color: white;
+        }
+
+        .auth-buttons .register {
+            background-color: #00c3ff;
+            color: white;
+        }
+
+        .auth-buttons .register:hover {
+            background-color: #0099cc;
+        }
+
+        /* Existing Styles */
+        .background-radial-gradient {
+            background-color: hsl(218, 41%, 15%);
+            background-image: radial-gradient(650px circle at 0% 0%,
+            hsl(218, 41%, 35%) 15%,
+            hsl(218, 41%, 30%) 35%,
+            hsl(218, 41%, 20%) 75%,
+            hsl(218, 41%, 19%) 80%,
+            transparent 100%),
+            radial-gradient(1250px circle at 100% 100%,
+                    hsl(218, 41%, 45%) 15%,
+                    hsl(218, 41%, 30%) 35%,
+                    hsl(218, 41%, 20%) 75%,
+                    hsl(218, 41%, 19%) 80%,
+                    transparent 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 60px; /* Added to account for fixed navbar */
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-links">
+        <a th:href="@{/}" class="active">ANA SAYFA</a>
+        <a th:href="@{/about}">BANKAMIZ</a>
+        <a th:href="@{/team}">TAKIM</a>
+    </div>
+    <div class="auth-buttons">
+        <a th:href="@{/register}" class="register">KAYIT OL</a>
+    </div>
+</nav>
+
+<section class="background-radial-gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6" style="z-index: 10">
+                <h1 class="display-5 fw-bold ls-tight">
+                    Hoşgeldiniz <br />
+                    <span>Sisteme Giriş Yapın</span>
+                </h1>
+                <p class="opacity-70 intro-text">
+                    Sistemimize giriş yaparak tüm özelliklerden yararlanabilirsiniz.
+                    Henüz üye değilseniz, hemen ücretsiz kayıt olabilirsiniz.
+                </p>
+            </div>
+
+            <div class="col-lg-6 position-relative">
+                <div id="radius-shape-1" class="shadow-5-strong"></div>
+                <div id="radius-shape-2" class="shadow-5-strong"></div>
+
+                <div class="bg-glass">
+                    <form class="login-form" onsubmit="handleLogin(event)">
+                        <div class="form-outline">
+                            <label class="form-label" for="username">Kullanıcı Adı</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+
+                        <div class="form-outline">
+                            <label class="form-label" for="password">Şifre</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Beni Hatırla</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Giriş Yap
+                        </button>
+
+                        <div id="errorMessage" class="error-message"></div>
+
+                        <div class="text-center mt-4">
+                            <p>Üye değil misiniz? <a href="/register">Kayıt Olun</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('jwt_token');
+        if (token) {
+            window.location.href = '/varliklar';
+        }
+    });
+
+    async function handleLogin(event) {
+        event.preventDefault();
+        const errorMessage = document.getElementById('errorMessage');
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('/api/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('jwt_token', data.jwt);
+                localStorage.setItem('username', data.username);
+                localStorage.setItem('user_id', data.userId.toString());
+                window.location.href = '/varliklar';
+            } else {
+                errorMessage.textContent = 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
+                errorMessage.style.display = 'block';
+            }
+        } catch (error) {
+            errorMessage.textContent = 'Bir hata oluştu. Lütfen tekrar deneyin.';
+            errorMessage.style.display = 'block';
+            console.error('Login error:', error);
+        }
+    }
+</script>
+</body>
+</html>

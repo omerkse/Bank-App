@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Atom - Internet Banking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .account-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .account-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .account-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .account-balance {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .account-number {
+            color: #666;
+            font-size: 14px;
+            padding: 5px 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-top: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #1e3a8a;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+        }
+
+        .transactions {
+            margin-top: 20px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            background: white;
+            border-radius: 8px;
+            transform: scale(1.01);
+        }
+
+        .transaction-date {
+            width: 100px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .negative {
+            color: #dc2626;
+        }
+
+        .chart-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .chart-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon:hover {
+            transform: rotate(360deg);
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Yeni eklenen animasyonlu grafik */
+        .chart-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                    #4CAF50 0% 75%,
+                    #E0E0E0 75% 100%
+            );
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.2);
+            animation: pulseChart 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseChart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .chart-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+        .logout-btn {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+        }
+
+        .username-display {
+            color: white;
+            font-weight: 500;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        .modal {
+            display: none; /* Başlangıçta gizli */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Arka plan bulanıklığı */
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .modal-content {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .modal-btn-primary {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .modal-btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 9999;
+            animation: slideInRight 0.3s ease-out;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .toast-success {
+            background-color: #10B981;
+        }
+
+        .toast-error {
+            background-color: #DC2626;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .transaction-item {
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .transaction-amount.positive {
+            color: #10B981;
+            font-weight: bold;
+        }
+
+        .transaction-amount.negative {
+            color: #DC2626;
+            font-weight: bold;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .new-transaction {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">
+        <img th:src="@{/images/atom.svg}" alt="Logo" style="height: 30px; width: auto;">
+        <span>AtOm</span>
+    </div>
+    <div class="nav-menu">
+        <a href="#"><i class="fas fa-home"></i> Hesaplar</a>
+        <a href="#"><i class="fas fa-credit-card"></i> Kartlar</a>
+        <a href="#"><i class="fas fa-exchange-alt"></i> Transferler</a>
+    </div>
+    <div class="profile">
+        <span class="username-display" id="usernameDisplay"></span>
+        <button class="logout-btn" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            Güvenli Çıkış
+        </button>
+    </div>
+</nav>
+
+<div class="main-content">
+    <div class="account-card">
+        <div class="account-header">
+            <div>
+                <h2>Vadesiz TL</h2>
+                <div class="account-number">TR 9890 0158 0073 0916 3712</div>
+            </div>
+            <div class="account-balance">2.180,90 TL</div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn">
+                <i class="fas fa-file-invoice"></i>
+                Fatura Öde
+            </button>
+            <button class="btn">
+                <i class="fas fa-paper-plane"></i>
+                Para Gönder
+            </button>
+            <button class="btn">
+                <i class="fas fa-plus"></i>
+                Ek Hesap
+            </button>
+        </div>
+
+        <div class="transactions">
+            <h3>Hesap Hareketleri</h3>
+            <div class="transaction-item">
+                <span class="transaction-date">17 Aralık</span>
+                <span>Bkm Pos Harcama</span>
+                <span class="transaction-amount negative">-15,00 TL</span>
+            </div>
+            <div class="transaction-item">
+                <span class="transaction-date">17 Aralık</span>
+                <span>Kambiyo Muameleleri</span>
+                <span class="transaction-amount negative">-1,42 TL</span>
+            </div>
+            <div class="transaction-item">
+                <span class="transaction-date">17 Aralık</span>
+                <span>Yurtdışı İnternet</span>
+                <span class="transaction-amount negative">-708,78 TL</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-section">
+        <h3>Varlıklarım</h3>
+        <div class="chart-circle">
+            <div class="chart-inner">
+                75%
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <div>Toplam Varlıklar</div>
+            <div style="font-size: 28px; font-weight: bold; color: #1e3a8a;">2.180,90 TL</div>
+        </div>
+    </div>
+</div>
+<div id="billPaymentModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Fatura Ödeme</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="billType">Fatura Tipi</label>
+                <select id="billType" class="form-control" onchange="checkBillAmount()">
+                    <option value="">Fatura Tipi Seçin</option>
+                    <option value="ELECTRICITY">Elektrik</option>
+                    <option value="WATER">Su</option>
+                    <option value="NATURAL_GAS">Doğalgaz</option>
+                    <option value="PHONE">Telefon</option>
+                    <option value="INTERNET">İnternet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="accountId">Hesap ID</label>
+                <input type="text" id="accountId" class="form-control" placeholder="Hesap ID girin" onchange="checkBillAmount()">
+            </div>
+            <div class="form-group">
+                <label for="billAmount">Tutar</label>
+                <input type="number" id="billAmount" class="form-control" placeholder="0.00" readonly>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn modal-btn-secondary" onclick="closeModal('billPaymentModal')">İptal</button>
+            <button class="modal-btn modal-btn-primary" onclick="payBill()">Ödemeyi Tamamla</button>
+        </div>
+    </div>
+</div>
+
+<!-- Para Gönderme Modal -->
+<div id="moneyTransferModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Para Gönder</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="recipientUserId">Alıcı ID</label>
+                <input type="text" id="recipientUserId" class="form-control" placeholder="Alıcı ID'sini girin">
+            </div>
+            <div class="form-group">
+                <label for="recipientUsername">Alıcı Kullanıcı Adı</label>
+                <input type="text" id="recipientUsername" class="form-control" placeholder="Alıcı kullanıcı adını girin">
+            </div>
+            <div class="form-group">
+                <label for="transferAmount">Tutar</label>
+                <input type="number" id="transferAmount" class="form-control" placeholder="0.00">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn modal-btn-secondary" onclick="closeModal('moneyTransferModal')">İptal</button>
+            <button class="modal-btn modal-btn-primary" onclick="sendMoney()">Gönder</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // =============== GENEL DEĞİŞKENLER VE SABİTLER ===============
+
+    // Main document ready handler
+    document.addEventListener('DOMContentLoaded', async function() {
+        const token = localStorage.getItem('jwt_token');
+        const username = localStorage.getItem('username');
+        const userId = localStorage.getItem('user_id');
+
+        if (!token) {
+            window.location.href = '/login';
+            return;
+        }
+
+        // Display username
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        if (username) {
+            usernameDisplay.textContent = `Hoşgeldin, ${username}`;
+        }
+
+        // Button event listeners
+        const billPaymentBtn = document.querySelector('.btn:nth-child(1)');
+        billPaymentBtn.addEventListener('click', () => openModal('billPaymentModal'));
+
+        const moneyTransferBtn = document.querySelector('.btn:nth-child(2)');
+        moneyTransferBtn.addEventListener('click', () => openModal('moneyTransferModal'));
+
+        // Modal close buttons
+        document.querySelectorAll('.close-modal').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const modal = e.target.closest('.modal');
+                closeModal(modal.id);
+            });
+        });
+
+        // Click outside modal to close
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal.id);
+                }
+            });
+        });
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('jwt_token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('user_id');
+            window.location.href = '/';
+        });
+
+        // Initialize account data
+        await updateAccountInfo();
+        const accountData = await getFirstAccount(userId, token);
+        if (accountData) {
+            await updateTransactions(accountData.id);
+
+        }
+    });
+
+    // =============== MODAL FONKSİYONLARI ===============
+
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    }
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // =============== TRANSACTION FONKSİYONLARI ===============
+
+    async function createTransaction(accountId, amount, type, description, relatedAccountId = null, billId = null) {
+        const token = localStorage.getItem('jwt_token');
+        try {
+            const response = await fetch('/api/transactions/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    accountId: accountId,
+                    amount: amount,
+                    type: type,
+                    description: description,
+                    relatedAccountId: relatedAccountId,
+                    billId: billId,
+                    transactionDate: new Date().toISOString()
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Transaction oluşturulamadı');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Transaction oluşturma hatası:', error);
+            throw error;
+        }
+    }
+
+    async function createTransferTransactions(fromAccountId, toAccountId, amount, senderUsername, recipientUsername) {
+        try {
+            // Gönderen için transaction
+            await createTransaction(
+                fromAccountId,
+                -amount,
+                'MONEY_TRANSFER',
+                `Giden Transfer (${recipientUsername})`,
+                toAccountId
+            );
+
+            // Alıcı için transaction
+            await createTransaction(
+                toAccountId,
+                amount,
+                'MONEY_TRANSFER',
+                `Gelen Transfer (${senderUsername})`,
+                fromAccountId
+            );
+        } catch (error) {
+            console.error('Transfer transaction kayıtları oluşturulamadı:', error);
+            throw error;
+        }
+    }
+
+    async function createBillPaymentTransaction(accountId, billId, amount, billType) {
+        const billTypeLabels = {
+            'ELECTRICITY': 'Elektrik Faturası',
+            'WATER': 'Su Faturası',
+            'NATURAL_GAS': 'Doğalgaz Faturası',
+            'PHONE': 'Telefon Faturası',
+            'INTERNET': 'İnternet Faturası'
+        };
+
+        try {
+            await createTransaction(
+                accountId,
+                -amount,
+                'BILL_PAYMENT',
+                `${billTypeLabels[billType] || 'Fatura'} Ödemesi`,
+                null,
+                billId
+            );
+        } catch (error) {
+            console.error('Fatura ödeme transaction kaydı oluşturulamadı:', error);
+            throw error;
+        }
+    }
+
+    async function updateTransactions(accountId, page = 1, pageSize = 5) {
+        try {
+            const token = localStorage.getItem('jwt_token');
+            const response = await fetch(`/api/accounts/${accountId}/transactions`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (response.ok) {
+                let transactions = await response.json();
+                transactions.sort((a, b) => new Date(b.transactionDate) - new Date(a.transactionDate));
+
+                const startIndex = (page - 1) * pageSize;
+                const endIndex = startIndex + pageSize;
+                const paginatedTransactions = transactions.slice(startIndex, endIndex);
+                const totalPages = Math.ceil(transactions.length / pageSize);
+
+                const transactionsContainer = document.querySelector('.transactions');
+                transactionsContainer.innerHTML = '<h3>Hesap Hareketleri</h3>';
+
+                paginatedTransactions.forEach(transaction => {
+                    const date = new Date(transaction.transactionDate).toLocaleDateString('tr-TR', {
+                        day: 'numeric',
+                        month: 'long'
+                    });
+
+                    let description = '';
+                    if (transaction.type === 'BILL_PAYMENT' && transaction.billType) {
+                        const billTypes = {
+                            'ELECTRICITY': 'Elektrik Faturası',
+                            'WATER': 'Su Faturası',
+                            'NATURAL_GAS': 'Doğalgaz Faturası',
+                            'PHONE': 'Telefon Faturası',
+                            'INTERNET': 'İnternet Faturası'
+                        };
+                        description = `${billTypes[transaction.billType]} Ödemesi`;
+                    } else {
+                        switch(transaction.type) {
+                            case 'DEPOSIT': description = 'Para Yatırma'; break;
+                            case 'WITHDRAWAL': description = 'Para Çekme'; break;
+                            case 'MONEY_TRANSFER':
+                                description = transaction.amount > 0 ? 'Gelen Transfer' : 'Giden Transfer';
+                                break;
+                            default: description = transaction.description || 'İşlem';
+                        }
+                    }
+
+                    const formattedAmount = new Intl.NumberFormat('tr-TR', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }).format(Math.abs(transaction.amount));
+
+                    const transactionElement = document.createElement('div');
+                    transactionElement.className = 'transaction-item';
+                    transactionElement.innerHTML = `
+                    <span class="transaction-date">${date}</span>
+                    <span>${description}</span>
+                    <span class="transaction-amount ${transaction.amount < 0 ? 'negative' : 'positive'}">
+                        ${transaction.amount >= 0 ? '+' : '-'}${formattedAmount} TL
+                    </span>
+                `;
+                    transactionsContainer.appendChild(transactionElement);
+                });
+
+                // Sayfalama kontrolleri
+                const paginationDiv = document.createElement('div');
+                paginationDiv.className = 'pagination';
+                paginationDiv.style.cssText = 'display: flex; justify-content: center; gap: 10px; margin-top: 15px;';
+
+                if (page > 1) {
+                    const prevButton = document.createElement('button');
+                    prevButton.textContent = 'Önceki Sayfa';
+                    prevButton.className = 'btn';
+                    prevButton.onclick = () => updateTransactions(accountId, page - 1);
+                    paginationDiv.appendChild(prevButton);
+                }
+
+                const pageText = document.createElement('span');
+                pageText.textContent = `Sayfa ${page}/${totalPages}`;
+                pageText.style.cssText = 'padding: 8px 16px;';
+                paginationDiv.appendChild(pageText);
+
+                if (page < totalPages) {
+                    const nextButton = document.createElement('button');
+                    nextButton.textContent = 'Sonraki Sayfa';
+                    nextButton.className = 'btn';
+                    nextButton.onclick = () => updateTransactions(accountId, page + 1);
+                    paginationDiv.appendChild(nextButton);
+                }
+
+                transactionsContainer.appendChild(paginationDiv);
+            }
+        } catch (error) {
+            console.error('İşlem geçmişi alınırken hata:', error);
+        }
+    }
+
+    // =============== FATURA İŞLEMLERİ ===============
+
+    async function checkBillAmount() {
+        const billType = document.getElementById('billType').value;
+        const accountId = document.getElementById('accountId').value;
+        const token = localStorage.getItem('jwt_token');
+
+        if (!billType || !accountId) {
+            showToast('Lütfen tüm alanları doldurun', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/bills/search`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    accountId: parseInt(accountId),
+                    billType: billType,
+                    status: 'PENDING'
+                })
+            });
+
+            if (response.ok) {
+                const bill = await response.json();
+                document.getElementById('billAmount').value = bill.amount;
+                if (!document.getElementById('billId')) {
+                    const billIdInput = document.createElement('input');
+                    billIdInput.type = 'hidden';
+                    billIdInput.id = 'billId';
+                    document.querySelector('.modal-body').appendChild(billIdInput);
+                }
+                document.getElementById('billId').value = bill.id;
+            } else {
+                showToast('Bu tipte ödenmemiş fatura bulunamadı', 'error');
+                document.getElementById('billAmount').value = '';
+            }
+        } catch (error) {
+            console.error('Fatura sorgulama hatası:', error);
+            showToast('Fatura sorgulanırken bir hata oluştu', 'error');
+            document.getElementById('billAmount').value = '';
+        }
+    }
+
+    async function payBill() {
+        const billId = document.getElementById('billId').value;
+        const accountId = document.getElementById('accountId').value;
+        const amount = document.getElementById('billAmount').value;
+        const token = localStorage.getItem('jwt_token');
+
+        if (!billId || !accountId || !amount) {
+            showToast('Lütfen önce fatura sorgulayın', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/bills/pay', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    billId: parseInt(billId),
+                    accountId: parseInt(accountId),
+                    amount: parseFloat(amount)
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Fatura ödeme transaction kaydı oluştur
+                const billType = document.getElementById('billType').value;
+                await createBillPaymentTransaction(parseInt(accountId), parseInt(billId), parseFloat(amount), billType);
+                showToast('Fatura başarıyla ödendi', 'success');
+                closeModal('billPaymentModal');
+                await updateAccountInfo();
+                await updateTransactions(accountId);
+            } else {
+                showToast(result.message || 'Fatura ödemesi başarısız oldu', 'error');
+            }
+        } catch (error) {
+            console.error('Ödeme hatası:', error);
+            showToast('İşlem sırasında bir hata oluştu', 'error');
+        }
+    }
+
+    // =============== PARA TRANSFERİ İŞLEMLERİ ===============
+
+    async function sendMoney() {
+        const recipientUserId = document.getElementById('recipientUserId').value;
+        const recipientUsername = document.getElementById('recipientUsername').value;
+        const amount = document.getElementById('transferAmount').value;
+        const token = localStorage.getItem('jwt_token');
+
+        if (!recipientUserId || !recipientUsername || !amount) {
+            showToast('Lütfen tüm alanları doldurun', 'error');
+            return;
+        }
+
+        try {
+            const senderAccount = await getFirstAccount(localStorage.getItem('user_id'), token);
+            if (!senderAccount) {
+                showToast('Gönderen hesap bilgileri alınamadı', 'error');
+                return;
+            }
+
+            const recipientAccount = await getFirstAccount(recipientUserId, token);
+            if (!recipientAccount) {
+                showToast('Alıcı hesabı bulunamadı', 'error');
+                return;
+            }
+
+            const transferResponse = await fetch('/api/transfers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    fromAccountId: senderAccount.id,
+                    toAccountId: recipientAccount.id,
+                    amount: parseFloat(amount)
+                })
+            });
+
+            const transferResult = await transferResponse.json();
+
+            if (transferResponse.ok) {
+                // Transfer transaction kayıtları oluştur
+                await createTransferTransactions(
+                    senderAccount.id,
+                    recipientAccount.id,
+                    parseFloat(amount),
+                    localStorage.getItem('username'),
+                    recipientUsername
+                );
+                showToast('Para transferi başarıyla gerçekleştirildi');
+                closeModal('moneyTransferModal');
+                clearTransferForm();
+                await updateAccountInfo();
+                await updateTransactions(senderAccount.id);
+            } else {
+                showToast(transferResult.message || 'Transfer işlemi başarısız oldu', 'error');
+            }
+        } catch (error) {
+            console.error('Transfer hatası:', error);
+            showToast('İşlem sırasında bir hata oluştu', 'error');
+        }
+    }
+
+    // =============== YARDIMCI FONKSİYONLAR ===============
+
+    function clearTransferForm() {
+        document.getElementById('recipientUserId').value = '';
+        document.getElementById('recipientUsername').value = '';
+        document.getElementById('transferAmount').value = '';
+    }
+
+    async function getFirstAccount(userId, token) {
+        try {
+            const response = await fetch(`/api/accounts/user/${userId}/first`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                return await response.json();
+            }
+            return null;
+        } catch (error) {
+            console.error('Hesap bilgileri alınamadı:', error);
+            return null;
+        }
+    }
+
+    async function updateAccountInfo() {
+        const token = localStorage.getItem('jwt_token');
+        const userId = localStorage.getItem('user_id');
+        const accountData = await getFirstAccount(userId, token);
+
+        if (accountData) {
+            const formattedBalance = new Intl.NumberFormat('tr-TR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(accountData.balance);
+
+            document.querySelector('.account-balance').textContent = `${formattedBalance} TL`;
+            document.querySelector('.chart-section div[style*="font-size: 28px"]').textContent = `${formattedBalance} TL`;
+        }
+    }
+
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.3s ease-out';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+</script>
+
+
+
+</body>
+</html>
